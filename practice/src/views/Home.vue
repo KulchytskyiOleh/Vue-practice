@@ -1,18 +1,31 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <ToDoList msg="Vue ToDo list" />
+    <input type="text" class='todoInput'/>
+    <ToDoItem />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import ToDoList from '@/components/ToDoList.vue';
+import ToDoItem from '@/components/ToDoItem.vue';
 
 export default {
-  name: "Home",
+  name: 'Home',
   components: {
-    HelloWorld,
+    ToDoList,
+    ToDoItem,
   },
 };
 </script>
+<style scoped>
+input.todoInput{
+  width: 50vh;
+  padding: 10px;
+}
+div.home {
+  margin: 0 auto;
+  width: 50%;
+  border: 1px solid black;
+}
+</style>
