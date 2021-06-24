@@ -1,21 +1,25 @@
 <template>
   <div class="Item">
     <p v-for="post in posts" :key="post.id">{{ post.id }} {{ post.title }}</p>
+    <p>{{ test1 }}</p>
+    <p>{{ test3 }}</p>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: "ToDoItem",
   props: {
-    msg: String,
+    test1: String,
+    test2: String,
+    test3: String,
   },
   data() {
     return {
       posts: [
-        { id: 1, title: 'My journey with Vue' },
-        { id: 2, title: 'Blogging with Vue' },
-        { id: 3, title: 'Why Vue is so fun' },
+        { id: 1, title: "My journey with Vue" },
+        { id: 2, title: "Blogging with Vue" },
+        { id: 3, title: "Why Vue is so fun" },
       ],
     };
   },

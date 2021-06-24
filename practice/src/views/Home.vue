@@ -1,17 +1,23 @@
 <template>
   <div class="home">
     <ToDoList msg="Vue ToDo list" />
-    <input type="text" class='todoInput'/>
-    <ToDoItem />
+    <input type="text" class="todoInput" :placeholder="test" v-model="test3" />
+    <ToDoItem :test1="test1" :msg1="msg1" />
   </div>
 </template>
 
 <script>
-import ToDoList from '@/components/ToDoList.vue';
-import ToDoItem from '@/components/ToDoItem.vue';
-
+import ToDoList from "@/components/ToDoList.vue";
+import ToDoItem from "@/components/ToDoItem.vue";
 export default {
-  name: 'Home',
+  data() {
+    return {
+      test: "enter your todo...",
+      test1: "Some new todo passed from parent to child",
+      test3: "",
+    };
+  },
+  name: "Home",
   components: {
     ToDoList,
     ToDoItem,
@@ -19,7 +25,7 @@ export default {
 };
 </script>
 <style scoped>
-input.todoInput{
+input.todoInput {
   width: 50vh;
   padding: 10px;
 }

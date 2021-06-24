@@ -6,7 +6,6 @@
 
 <script>
 export default {
-  name: "HelloWorld",
   props: {
     msg: String,
   },
@@ -15,6 +14,7 @@ export default {
 
 <style scoped>
 div.hello {
+  color: #ff0000;
 }
 h3 {
   margin: 40px 0 0;
