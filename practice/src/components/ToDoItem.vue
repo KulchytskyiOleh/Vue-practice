@@ -9,11 +9,17 @@
     <p @click="$emit('onToggle')" :class="todo.completed ? 'completed' : null">
       {{ todo.title }}
     </p>
-    <button v-if="isEditing" class="saveEdited" @click="$emit('onEdit')">
+    <button v-if="isEditing" class="btn saveEdited" @click="$emit('onEdit')">
       &#x1F4BE;
     </button>
-    <button class="editTodo" @click="$emit('onEdit')">&#9997;</button>
-    <button class="deleteTodo" @click="$emit('onDelete')">&#x274C;</button>
+    <button
+      v-if="!isEditing"
+      class="btn editTodo"
+      @click="$emit('onEdit', todo.id)"
+    >
+      &#9997;
+    </button>
+    <button class="btn deleteTodo" @click="$emit('onDelete')">&#x274C;</button>
   </div>
 </template>
 
@@ -60,24 +66,22 @@ p {
   align-self: center;
   width: 20px;
 }
-.deleteTodo {
-  grid-area: deleteTodo;
+.btn {
   border: none;
   background-color: inherit;
-  color: #ff0000;
   width: 30px;
   height: 30px;
   align-self: center;
   justify-self: center;
 }
+.deleteTodo {
+  grid-area: deleteTodo;
+  color: #ff0000;
+}
 .editTodo {
   grid-area: editTodo;
-  border: none;
-  background-color: inherit;
-  color: #ff0000;
-  width: 30px;
-  height: 30px;
-  align-self: center;
-  justify-self: center;
+}
+.saveEdited {
+  grid-area: editTodo;
 }
 </style>
