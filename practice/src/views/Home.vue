@@ -1,19 +1,20 @@
 <template>
   <div class="home">
     <ToDoList msg="Vue ToDo list" />
-    <p>{{ isEditing }}</p>
+    <!-- <form @submit.prevent="addTodo()"> -->
     <input
       type="text"
       class="todoInput"
       :placeholder="test"
       v-model="inputValue"
+      @keyup.enter="addTodo"
     />
-    <button v-on:click="addTodo" class="addBtn">add</button>
+    <!-- </form> -->
+    <!-- <button v-on:click="addTodo" class="addBtn">add</button> -->
     <ToDoItem
       v-for="todo in todos"
       :key="todo.id"
       :todo="todo"
-      :isEditing="isEditing"
       @onToggle="isCompleted(todo)"
       @onDelete="todoDelete(todo)"
       @onEdit="editTodo(todo)"
@@ -43,7 +44,7 @@ export default {
           id: 2,
           title: "Blogging with Vue",
           completed: true,
-          isEditing: true,
+          isEditing: false,
         },
         {
           id: 3,
@@ -72,11 +73,9 @@ export default {
       this.todos = this.todos.filter((todo) => todo != deleteTodo);
     },
     editTodo(editedTodo) {
-      this.todos.find((todo) =>
+      this.todos.filter((todo) =>
         todo.id === editedTodo.id
-          ? ((todo.isEditing = !todo.isEditing),
-            (this.isEditing = todo.isEditing),
-            console.log(todo))
+          ? (todo.isEditing = !editedTodo.isEditing)
           : todo.isEditing
       );
     },
@@ -89,7 +88,7 @@ export default {
 </script>
 <style scoped>
 input.todoInput {
-  max-width: 45vh;
+  max-width: 50vh;
   padding: 10px;
 }
 div.home {

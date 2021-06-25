@@ -9,11 +9,15 @@
     <p @click="$emit('onToggle')" :class="todo.completed ? 'completed' : null">
       {{ todo.title }}
     </p>
-    <button v-if="isEditing" class="btn saveEdited" @click="$emit('onEdit')">
+    <button
+      v-if="todo.isEditing"
+      class="btn saveEdited"
+      @click="$emit('onEdit')"
+    >
       &#x1F4BE;
     </button>
     <button
-      v-if="!isEditing"
+      v-if="!todo.isEditing"
       class="btn editTodo"
       @click="$emit('onEdit', todo.id)"
     >
