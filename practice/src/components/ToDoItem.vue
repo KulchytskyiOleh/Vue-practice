@@ -73,15 +73,7 @@ div.Item {
   margin: 20px auto;
   border: 1px solid #000000;
   width: 50%;
-}
-p {
-  display: grid;
-  grid-area: title;
-  justify-self: start;
-  align-self: center;
-  padding: 5px;
-  margin: 5px;
-  width: 100px;
+  grid-template-columns: 0.2fr 1.6fr 0.2fr 0.2fr;
 }
 .todoCheckbox {
   cursor: pointer;
@@ -90,12 +82,18 @@ p {
   align-self: center;
   width: 20px;
 }
+p {
+  display: grid;
+  grid-area: title;
+  justify-self: start;
+  align-self: center;
+  padding: 5px;
+  margin: 5px;
+}
 .btn {
   cursor: pointer;
   border: none;
   background-color: inherit;
-  /* width: 15px; */
-  /* height: 15px; */
   align-self: center;
 }
 .deleteTodo {
@@ -103,7 +101,7 @@ p {
   color: #ff0000;
 }
 .editTodo {
-  justify-self: end;
+  justify-self: center;
   grid-area: editTodo;
 }
 .saveEdited {
