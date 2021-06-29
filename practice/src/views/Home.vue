@@ -1,7 +1,6 @@
 <template>
   <div class="home">
     <ToDoList msg="Vue ToDo list" />
-    <!-- <form @submit.prevent="addTodo()"> -->
     <input
       type="text"
       class="todoInput"
@@ -9,7 +8,6 @@
       v-model="inputValue"
       @keyup.enter="addTodo"
     />
-    <!-- </form> -->
     <!-- <button v-on:click="addTodo" class="addBtn">add</button> -->
     <ToDoItem
       v-for="todo in todos"
@@ -17,7 +15,7 @@
       :todo="todo"
       @onToggle="isCompleted(todo)"
       @onDelete="todoDelete(todo)"
-      @onEdit="editTodo(todo)"
+      @onEdit="editTodo"
     />
   </div>
 </template>
@@ -72,12 +70,14 @@ export default {
     todoDelete(deleteTodo) {
       this.todos = this.todos.filter((todo) => todo != deleteTodo);
     },
-    editTodo(editedTodo) {
-      this.todos.filter((todo) =>
-        todo.id === editedTodo.id
-          ? (todo.isEditing = !editedTodo.isEditing)
-          : todo.isEditing
-      );
+    editTodo(editedTodo, editedTitle) {
+      this.todos.findIndex((todo) => todo.id === editedTodo);
+      this.todos = this.todos.map((el) => {
+        if (el.id === editedTodo) {
+          el.title = editedTitle;
+        }
+        return el;
+      });
     },
   },
   components: {
@@ -88,7 +88,7 @@ export default {
 </script>
 <style scoped>
 input.todoInput {
-  max-width: 50vh;
+  width: 70vh;
   padding: 10px;
 }
 div.home {

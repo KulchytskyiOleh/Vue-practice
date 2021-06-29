@@ -6,20 +6,41 @@
       :checked="todo.completed"
       class="todoCheckbox"
     />
-    <p @click="$emit('onToggle')" :class="todo.completed ? 'completed' : null">
+    <input
+      v-if="isEditing"
+      v-model="editedValue"
+      class="inputTodo"
+      type="text"
+      ref="editedValue"
+      @keyup.enter="
+        $emit('onEdit', todo.id, editedValue);
+        isEditing = false;
+      "
+    />
+    <p
+      v-else-if="!isEditing"
+      @click="$emit('onToggle')"
+      :class="todo.completed ? 'completed' : null"
+    >
       {{ todo.title }}
     </p>
     <button
-      v-if="todo.isEditing"
+      v-if="isEditing"
+      @click="
+        $emit('onEdit', todo.id, editedValue);
+        isEditing = false;
+      "
       class="btn saveEdited"
-      @click="$emit('onEdit')"
     >
       &#x1F4BE;
     </button>
     <button
-      v-if="!todo.isEditing"
+      v-if="!isEditing"
       class="btn editTodo"
-      @click="$emit('onEdit', todo.id)"
+      @click="
+        isEditing = !isEditing;
+        testMet(todo.id);
+      "
     >
       &#9997;
     </button>
@@ -31,16 +52,19 @@
 export default {
   name: "ToDoItem",
   props: {
-    test1: String,
-    test2: String,
     todo: Object,
-    isEditing: Boolean,
-    // onToggle: Function,
   },
   data() {
-    return {};
+    return {
+      isEditing: false,
+      editedValue: this.todo.title,
+    };
   },
-  methods: {},
+  methods: {
+    testMet() {
+      this.$nextTick(() => this.$refs.editedValue.focus());
+    },
+  },
 };
 </script>
 
@@ -61,7 +85,7 @@ p {
   justify-self: start;
   align-self: center;
   padding: 5px;
-  margin: 10px;
+  margin: 5px;
   width: 100px;
 }
 .todoCheckbox {
@@ -73,19 +97,27 @@ p {
 .btn {
   border: none;
   background-color: inherit;
-  width: 30px;
-  height: 30px;
+  /* width: 15px; */
+  /* height: 15px; */
   align-self: center;
-  justify-self: center;
 }
 .deleteTodo {
   grid-area: deleteTodo;
   color: #ff0000;
 }
 .editTodo {
+  justify-self: end;
   grid-area: editTodo;
 }
 .saveEdited {
+  justify-self: end;
   grid-area: editTodo;
+}
+.inputTodo {
+  border: none;
+  padding: 5px;
+  margin: 5px;
+  width: 80%;
+  outline: none;
 }
 </style>
