@@ -34,14 +34,7 @@
     >
       &#x1F4BE;
     </button>
-    <button
-      v-if="!isEditing"
-      class="btn editTodo"
-      @click="
-        isEditing = !isEditing;
-        testMet(todo.id);
-      "
-    >
+    <button v-if="!isEditing" class="btn editTodo" @click="testMet">
       &#9997;
     </button>
     <button class="btn deleteTodo" @click="$emit('onDelete')">&#x274C;</button>
@@ -62,6 +55,7 @@ export default {
   },
   methods: {
     testMet() {
+      this.isEditing = !this.isEditing;
       this.$nextTick(() => this.$refs.editedValue.focus());
     },
   },
@@ -70,7 +64,8 @@ export default {
 
 <style scoped>
 .completed {
-  text-decoration: line-through;
+  text-decoration: 2px line-through #000000;
+  color: #778899;
 }
 div.Item {
   display: grid;
@@ -89,12 +84,14 @@ p {
   width: 100px;
 }
 .todoCheckbox {
+  cursor: pointer;
   grid-area: checkbox;
   justify-self: center;
   align-self: center;
   width: 20px;
 }
 .btn {
+  cursor: pointer;
   border: none;
   background-color: inherit;
   /* width: 15px; */
@@ -110,14 +107,14 @@ p {
   grid-area: editTodo;
 }
 .saveEdited {
-  justify-self: end;
+  justify-self: center;
   grid-area: editTodo;
 }
 .inputTodo {
   border: none;
   padding: 5px;
   margin: 5px;
-  width: 80%;
+  width: 70%;
   outline: none;
 }
 </style>

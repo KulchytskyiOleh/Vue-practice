@@ -10,7 +10,7 @@
     />
     <!-- <button v-on:click="addTodo" class="addBtn">add</button> -->
     <ToDoItem
-      v-for="todo in todos"
+      v-for="todo in todosData"
       :key="todo.id"
       :todo="todo"
       @onToggle="isCompleted(todo)"
@@ -23,6 +23,7 @@
 <script>
 import ToDoList from "@/components/ToDoList.vue";
 import ToDoItem from "@/components/ToDoItem.vue";
+
 export default {
   name: "Home",
   data() {
@@ -31,7 +32,7 @@ export default {
       editedTodo: "",
       isEditing: false,
       test: "enter your todo...",
-      todos: [
+      todosData: JSON.parse(localStorage.getItem("todos")) || [
         {
           id: 1,
           title: "My journey with Vue",
@@ -56,28 +57,37 @@ export default {
   methods: {
     addTodo() {
       if (this.inputValue.length > 0) {
-        this.todos.push({
-          id: this.todos.length + 1,
+        this.todosData.push({
+          id: Date.now(),
           title: this.inputValue,
           completed: false,
+          isEditing: false,
         });
       }
       this.inputValue = "";
+      this.saveData();
     },
     isCompleted(todo) {
       todo.completed = !todo.completed;
+      this.saveData();
     },
     todoDelete(deleteTodo) {
-      this.todos = this.todos.filter((todo) => todo != deleteTodo);
+      this.todosData = this.todosData.filter((todo) => todo != deleteTodo);
+      this.saveData();
     },
     editTodo(editedTodo, editedTitle) {
-      this.todos.findIndex((todo) => todo.id === editedTodo);
-      this.todos = this.todos.map((el) => {
+      this.todosData.findIndex((todo) => todo.id === editedTodo);
+      this.todosData = this.todosData.map((el) => {
         if (el.id === editedTodo) {
           el.title = editedTitle;
         }
         return el;
       });
+      this.saveData();
+    },
+    saveData() {
+      const storageData = JSON.stringify(this.todosData);
+      localStorage.setItem("todos", storageData);
     },
   },
   components: {
@@ -88,8 +98,8 @@ export default {
 </script>
 <style scoped>
 input.todoInput {
-  width: 70vh;
-  padding: 10px;
+  width: 50%;
+  padding: 15px;
 }
 div.home {
   margin: 0 auto;
